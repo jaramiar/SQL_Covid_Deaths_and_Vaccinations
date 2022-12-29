@@ -102,7 +102,10 @@ where dea.continent is not null and vac.new_vaccinations is not null
 order by 1,2,3;
 
 
+
+
 -- Looking at Total Populations vs Vaccinations (2 methods)
+
 
 -- Setup:
  Select dea.continent, dea.location, dea.date, dea.population, vac.new_vaccinations,
@@ -114,6 +117,7 @@ join Portfolio_Project..Covid_Vaccinations$ vac
 	and dea.date = vac.date
 where dea.continent is not null and vac.new_vaccinations is not null
 order by 1,2,3;
+
 
 -- Method 1: Use CTE 
 With Pop_vs_vac (continent, location, date, population, new_vaccinations, rolling_vaccinations)
@@ -159,7 +163,7 @@ from #PercentPopulationVaccinated
 Pop_vs_vac;
 
 
-
+-- Alternative Temp Table
 drop table if exists #PercentPopulationVaccinated
 Create Table #PercentPopulationVaccinated
 (
@@ -184,8 +188,9 @@ Select*, (Rolling_Vaccinations/population)*100 as percent_rolling_vaccinations
 from #PercentPopulationVaccinated
 Pop_vs_vac;
 
--- Create View to store data for later visualizations
 
+
+-- Create View to store data for later visualizations
 
 Create View PercentPopulationVaccinated as
 Select dea.continent, dea.location, dea.date, dea.population, vac.new_vaccinations,
